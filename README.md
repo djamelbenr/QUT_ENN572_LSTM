@@ -7,3 +7,5 @@ A single-file, lecture-ready demo (moving_mnist_lstm_all_in_one.py) showcasing s
 Vision seq2seq: next-frame prediction on MovingMNIST
 Text seq2seq: alphabet wrap-around (e.g., ABC→DEF, XYZ→YZA, A→B, E→F) with an optional Tkinter GUI
 The script is self-contained, reproducible, and designed for quick classroom demos and student exploration.
+
+![seq_00_gt_pred_err](https://github.com/user-attachments/assets/35468a11-3d0d-4dd2-9d26-8d6ebf127bf8)
