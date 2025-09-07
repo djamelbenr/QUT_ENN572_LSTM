@@ -20,39 +20,18 @@ A compact, end-to-end word-level LSTM language model that learns to complete the
 What it does
 
 Downloads a small corpus: Alice in Wonderland (11), Sherlock Holmes (1661), Pride and Prejudice (1342), The Time Machine (35), Dracula (345).
-
 Cleans Project Gutenberg headers/footers and splits into sentences.
-
 Tokenises at the word/punctuation level; lower-cases by default; builds a vocabulary with <pad>, <unk>, <bos>, <eos>.
-
 Streams a continuous token sequence with <eos> between sentences; trains by next-token prediction (cross-entropy).
-
 Models with a 2-layer LSTM (configurable), dropout, optional weight-tying, and gradient clipping.
-
 Evaluates using token-level loss and perplexity; saves checkpoints (.pt and .best.pt).
-
 Generates sentence completions using temperature, top-k and/or top-p (nucleus) sampling until a set number of sentences are completed.
 
 Key implementation details
-
 Dataset: contiguous token stream (word-level) with <eos> markers; 90/10 train/validation split.
-
 Loss/metric: cross-entropy; perplexity reported per epoch.
-
 Model: Embedding → LSTM (layers) → Linear (or projection + tied weights when enabled).
-
 Sampling: configurable --temperature, --top-k, --top-p; stops after --gen-sentences <eos> tokens.
-
-Reproducibility: fixed seed (--seed); deterministic initialisation where possible.
-
-Resilience: if downloads fail, uses a tiny fallback corpus so the pipeline still runs.
-
-Quick start
-
-Install deps (minimal):
-
-pip install torch tqdm requests numpy
-
 
 Train:
 
@@ -69,17 +48,12 @@ python lstm_text_completion.py --resume lstm_lm.pt \
 Tip: You can also generate immediately after training without --resume (the script reloads the latest save).
 
 
-
 Requirements
 
 Python 3.9+
-
 PyTorch (CPU or CUDA)
-
 NumPy, Matplotlib, ImageIO
-
 (Optional for MovingMNIST) torchvision (dataset download/cache)
-
 (Optional for GUI) Tkinter (bundled with most standard Python installers)
 
 # Minimal
