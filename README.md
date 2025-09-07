@@ -1,66 +1,85 @@
 # QUT_ENN572_LSTM
 
-MovingMNIST & Alphabet LSTM — Toy Example
+**MovingMNIST & Alphabet LSTM — Toy Examples**  
+_QUT Lecture: Artificial Intelligence in Transport_
 
-QUT Lecture: Artificial Intelligence in Transport
-
-This repository contains two short exercises using LSTM networks—a simple NLP task and a digit-sequence prediction task.
-
-Exercise 1:  pack (single file), moving_mnist_lstm_all_in_one.py — a lecture-ready, self-contained demo of sequence-to-sequence learning with LSTMs:
-Vision (seq2seq): next-frame prediction on Moving MNIST (digits).
-Text (seq2seq): alphabet wrap-around (e.g., ABC→DEF, XYZ→YZA, A→B, E→F), with an optional Tkinter GUI for interactive testing.
-The script is reproducible and designed for quick classroom demonstrations and student exploration.
+This repository provides two compact exercises demonstrating sequence modelling with LSTMs: a vision task (MovingMNIST next-frame prediction) and a simple NLP task (alphabet sequence mapping). A second script shows a word-level LSTM language model for next-sentence completion using Project Gutenberg texts.
 
 ![seq_00_gt_pred_err](https://github.com/user-attachments/assets/35468a11-3d0d-4dd2-9d26-8d6ebf127bf8)
 
-Exercise 2:
+---
 
-A compact, end-to-end word-level LSTM language model that learns to complete the next sentence(s) from a prompt. It fetches public-domain texts from Project Gutenberg, builds a dataset, trains a pure LSTM (no Transformers), and then generates continuations with temperature/top-k/top-p sampling.
+## Contents
 
-What it does
+- [Exercise 1 — `moving_mnist_lstm_all_in_one.py`](#exercise-1--moving_mnist_lstm_all_in_onepy)
+- [Exercise 2 — `lstm_text_completion.py`](#exercise-2--lstm_text_completionpy)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Headless/Remote Environments](#headlessremote-environments)
+- [Repository Structure (suggested)](#repository-structure-suggested)
+- [Licence](#licence)
 
-Downloads a small corpus: Alice in Wonderland (11), Sherlock Holmes (1661), Pride and Prejudice (1342), The Time Machine (35), Dracula (345).
-Cleans Project Gutenberg headers/footers and splits into sentences.
-Tokenises at the word/punctuation level; lower-cases by default; builds a vocabulary with <pad>, <unk>, <bos>, <eos>.
-Streams a continuous token sequence with <eos> between sentences; trains by next-token prediction (cross-entropy).
-Models with a 2-layer LSTM (configurable), dropout, optional weight-tying, and gradient clipping.
-Evaluates using token-level loss and perplexity; saves checkpoints (.pt and .best.pt).
-Generates sentence completions using temperature, top-k and/or top-p (nucleus) sampling until a set number of sentences are completed.
+---
 
-Key implementation details
-Dataset: contiguous token stream (word-level) with <eos> markers; 90/10 train/validation split.
-Loss/metric: cross-entropy; perplexity reported per epoch.
-Model: Embedding → LSTM (layers) → Linear (or projection + tied weights when enabled).
-Sampling: configurable --temperature, --top-k, --top-p; stops after --gen-sentences <eos> tokens.
+## Exercise 1 — `moving_mnist_lstm_all_in_one.py`
 
-Train:
+A lecture-ready, single-file demo of sequence-to-sequence learning with LSTMs.
 
-python lstm_text_completion.py --books alice,sherlock,pride --epochs 5 --batch-size 64 --seq-len 64
+**Includes**
+- **Vision (seq2seq):** next-frame prediction on MovingMNIST (digit sprites).
+- **Text (seq2seq):** alphabet wrap-around, e.g. `ABC → DEF`, `XYZ → YZA`, `A → B`, `E → F`.
+- **Interactive testing:** optional Tkinter GUI for the alphabet task.
 
+**Quick start**
+```bash
+# Alphabet GUI (greedy predictions by default)
+python moving_mnist_lstm_all_in_one.py --alphabet-gui
 
-Generate (after training):
+# Train/evaluate MovingMNIST (example flags; edit as needed)
+python moving_mnist_lstm_all_in_one.py --task moving_mnist --epochs 5 --batch-size 32
+# QUT_ENN572_LSTM
 
-python lstm_text_completion.py --resume lstm_lm.pt \
-  --generate "She opened the door and" \
-  --gen-sentences 2 --temperature 0.9 --top-p 0.9
+**MovingMNIST & Alphabet LSTM — Toy Examples**  
+_QUT Lecture: Artificial Intelligence in Transport_
 
+This repository provides two compact exercises demonstrating sequence modelling with LSTMs: a vision task (MovingMNIST next-frame prediction) and a simple NLP task (alphabet sequence mapping). A second script shows a word-level LSTM language model for next-sentence completion using Project Gutenberg texts.
 
-Tip: You can also generate immediately after training without --resume (the script reloads the latest save).
+![seq_00_gt_pred_err](https://github.com/user-attachments/assets/35468a11-3d0d-4dd2-9d26-8d6ebf127bf8)
 
+---
 
-Requirements
+## Contents
 
-Python 3.9+
-PyTorch (CPU or CUDA)
-NumPy, Matplotlib, ImageIO
-(Optional for MovingMNIST) torchvision (dataset download/cache)
-(Optional for GUI) Tkinter (bundled with most standard Python installers)
+- [Exercise 1 — `moving_mnist_lstm_all_in_one.py`](#exercise-1--moving_mnist_lstm_all_in_onepy)
+- [Exercise 2 — `lstm_text_completion.py`](#exercise-2--lstm_text_completionpy)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Headless/Remote Environments](#headlessremote-environments)
+- [Repository Structure (suggested)](#repository-structure-suggested)
+- [Licence](#licence)
 
-# Minimal
-pip install torch numpy matplotlib imageio
+---
 
-# To enable MovingMNIST task
-pip install torchvision
+## Exercise 1 — `moving_mnist_lstm_all_in_one.py`
 
+A lecture-ready, single-file demo of sequence-to-sequence learning with LSTMs.
 
-In headless environments (e.g., remote servers), the GUI falls back to a small console REPL.
+**Includes**
+- **Vision (seq2seq):** next-frame prediction on MovingMNIST (digit sprites).
+- **Text (seq2seq):** alphabet wrap-around, e.g. `ABC → DEF`, `XYZ → YZA`, `A → B`, `E → F`.
+- **Interactive testing:** optional Tkinter GUI for the alphabet task.
+
+**Quick start**
+```bash
+# Alphabet GUI (greedy predictions by default)
+python moving_mnist_lstm_all_in_one.py --alphabet-gui
+
+# Train/evaluate MovingMNIST (example flags; edit as needed)
+python moving_mnist_lstm_all_in_one.py --task moving_mnist --epochs 5 --batch-size 32
+
+QUT_ENN572_LSTM/
+├─ moving_mnist_lstm_all_in_one.py   # Exercise 1: MovingMNIST + Alphabet (GUI optional)
+├─ lstm_text_completion.py           # Exercise 2: LSTM LM for next-sentence completion
+├─ weights/                          # (optional) saved models/checkpoints
+├─ assets/                           # (optional) figures, GIFs, etc.
+└─ README.md
